@@ -1,0 +1,5 @@
+# Maquettes de prospection ClearDesign.
+# Aucune de ces pages ne doit apparaitre dans un moteur de recherche :
+# ce sont des propositions commerciales adressees a une personne, pas des sites publies.
+User-agent: *
+Disallow: /
