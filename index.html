@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ClearDesign — le site est en construction</title>
-<meta name="description" content="ClearDesign conçoit des sites sur mesure pour les artisans et les entreprises. Le nouveau site arrive.">
+<title>ClearDesign — expérience en construction</title>
+<meta name="description" content="ClearDesign conçoit des sites sur mesure pour les artisans et les entreprises. Dévoilement le 10 août 2026.">
 <!-- Page d'attente : elle ne doit pas etre indexee comme la page d'accueil de l'agence. -->
 <meta name="robots" content="noindex,follow">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,28 +12,28 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&display=swap" rel="stylesheet">
 <style>
 /* ─────────────────────────────────────────────────────────────
-   ClearDesign — page d'attente. 30/07/2026, apres la decision de Fadel :
-   BLANC primaire · DORE secondaire · NOIR tertiaire.
+   ClearDesign — page d'attente, 30/07/2026.
+   Hierarchie fixee par Fadel ce soir-la : BLANC primaire, DORE secondaire,
+   NOIR tertiaire. Document d'autorite : 05_DESIGN/DESIGN_SYSTEM/COLORS/README.md
 
-   La hierarchie se lit dans la composition, pas seulement dans les valeurs :
-   la page est blanche (primaire), l'or n'apparait que sur la marque et le
-   monogramme (secondaire), le noir ne sert qu'a une seule surface, le disque
-   qui porte le monogramme (tertiaire).
+   La hierarchie se lit dans la composition, pas seulement dans les valeurs : la page
+   est blanche, l'or ne porte que la marque et le monogramme, le noir ne sert qu'a une
+   seule surface, le disque qui porte le monogramme.
 
-   Contrastes MESURES sur fond blanc, pas supposes (charte : 4,5:1 minimum) :
-     noir #0A0A0A ........ 19,80:1   titre
+   Contrastes MESURES sur blanc, pas supposes (seuil charte : 4,5:1) :
+     noir #0A0A0A ........ 19,80:1   titre, chiffres du compte a rebours
      gris #6B6B6B ......... 5,33:1   corps
      or profond #94702A ... 4,56:1   le seul or lisible en texte
      or de marque #D4A03C . 2,36:1   INSUFFISANT en texte -> decoratif uniquement
+   D'ou la regle : l'or de marque ne porte jamais un mot a lire. Il trace, il souligne.
 
    Composition alignee a gauche : la charte interdit le texte centre sur toute une page.
 
    Mouvements, chacun avec son intention, aucun de plus :
-     1. le monogramme TOURNE      -> la marque est vivante, presente (rendu 3D maison)
-     2. le trait d'or se TRACE    -> le chantier est en cours, on montre au lieu de dire
-     3. le texte MONTE            -> entree, une seule fois
-   Pas de curseur clignotant en plus : il dirait la meme chose que le trait, et
-   deux mecanismes pour une meme sensation, le second dilue (LOI-009).
+     1. le monogramme TOURNE       -> la marque est vivante (rendu 3D maison)
+     2. le compte a rebours DESCEND -> c'est lui qui tient l'attention
+     3. le trait d'or se TRACE      -> le chantier est en cours
+     4. le texte MONTE              -> entree, une seule fois
    Le titre, element LCP, n'a aucune animation d'opacite (LOI-016).
    ───────────────────────────────────────────────────────────── */
 :root{
@@ -60,129 +60,132 @@ body{
   overflow-x:hidden;
 }
 .page{
-  width:100%;
-  max-width:72rem;
-  margin:0 auto;
-  display:grid;
-  gap:clamp(2.4rem,6vw,5rem);
-  grid-template-columns:1fr;
-  align-items:center;
+  width:100%;max-width:72rem;margin:0 auto;
+  display:grid;gap:clamp(2.2rem,5vw,4.5rem);
+  grid-template-columns:1fr;align-items:center;
 }
-@media(min-width:900px){
-  .page{grid-template-columns:1.25fr .75fr}
-}
+@media(min-width:900px){.page{grid-template-columns:1.3fr .7fr}}
 
-/* ── le monogramme : seule surface noire de la page (tertiaire) ── */
+/* ── monogramme : seule surface noire de la page (tertiaire) ── */
 .marque-3d{
-  position:relative;
-  width:min(19rem,64vw);
-  aspect-ratio:1;
-  border-radius:50%;
-  overflow:hidden;
-  background:var(--noir);
-  justify-self:start;
-  order:-1;
+  position:relative;width:min(17rem,58vw);aspect-ratio:1;
+  border-radius:50%;overflow:hidden;background:var(--noir);
+  justify-self:start;order:-1;
 }
-@media(min-width:900px){.marque-3d{order:0;justify-self:center;width:min(21rem,26vw)}}
-.marque-3d video{
-  width:100%;height:100%;
-  object-fit:cover;
-  display:block;
-  transform:scale(1.02);   /* mange le liseré du rendu, sans recadrer le sujet */
-}
-/* repli si la video ne demarre pas (economie de donnees, navigateur ancien) :
-   le disque noir reste, avec le monogramme en toutes lettres. */
+@media(min-width:900px){.marque-3d{order:0;justify-self:center;width:min(20rem,24vw)}}
+.marque-3d video{width:100%;height:100%;object-fit:cover;display:block;transform:scale(1.02)}
 .marque-3d .repli{
-  position:absolute;inset:0;
-  display:grid;place-items:center;
-  color:var(--or);
-  font-size:3.2rem;font-weight:800;letter-spacing:.02em;
-  z-index:-1;
+  position:absolute;inset:0;display:grid;place-items:center;
+  color:var(--or);font-size:3.2rem;font-weight:800;z-index:-1;
 }
 
-/* ── texte ── */
+/* ── marque ── */
 .marque{
-  color:var(--noir);
-  animation:none;
-  max-width:none;
-  font-size:.94rem;
-  font-weight:700;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  margin-bottom:clamp(1.8rem,5vw,2.6rem);
+  color:var(--noir);animation:none;max-width:none;
+  font-size:.92rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  margin-bottom:clamp(1.5rem,4vw,2.2rem);
 }
 .marque .clair{color:var(--or-texte)}
 
-/* titre : element LCP, peint immediatement, jamais d'opacite animee */
+/* ── titre : element LCP, peint immediatement ── */
 h1{
-  font-size:clamp(2rem,6vw,3.9rem);
-  font-weight:800;
-  line-height:1.1;
-  letter-spacing:-.02em;
-  max-width:15ch;
+  font-size:clamp(1.9rem,5.6vw,3.5rem);
+  font-weight:800;line-height:1.1;letter-spacing:-.02em;max-width:15ch;
 }
 
-/* le trait qui se trace : le geste du chantier */
 .trait{
-  height:2px;
-  width:min(13rem,55%);
-  margin:clamp(1.5rem,3.5vw,2.2rem) 0;
+  height:2px;width:min(11rem,48%);
+  margin:clamp(1.3rem,3vw,1.8rem) 0;
   background:linear-gradient(90deg,var(--or),var(--or-clair));
   transform-origin:left center;
   animation:trace 1.15s cubic-bezier(.22,.61,.36,1) both;
 }
 @keyframes trace{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 
-p{
-  color:var(--gris);
-  font-size:clamp(1rem,2.2vw,1.1rem);
-  max-width:60ch;
-  animation:monte .85s cubic-bezier(.22,.61,.36,1) both;
-  animation-delay:.42s;
+/* ── compte a rebours : c'est lui qui retient ── */
+.rebours{
+  display:flex;gap:clamp(1rem,3.4vw,2.1rem);flex-wrap:wrap;
+  animation:monte .85s cubic-bezier(.22,.61,.36,1) both;animation-delay:.34s;
 }
-p + p{margin-top:1.05rem;animation-delay:.54s}
+.case{min-width:3.4rem}
+.case b{
+  display:block;
+  font-size:clamp(2.1rem,6.4vw,3.4rem);
+  font-weight:800;line-height:1;letter-spacing:-.03em;
+  font-variant-numeric:tabular-nums;
+  font-feature-settings:"tnum" 1;
+  color:var(--noir);
+}
+.case span{
+  display:block;margin-top:.4rem;
+  font-size:.7rem;font-weight:700;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--or-texte);
+}
+.echeance{
+  margin-top:clamp(.9rem,2.4vw,1.3rem);
+  font-size:.94rem;color:var(--gris);
+  animation:monte .85s cubic-bezier(.22,.61,.36,1) both;animation-delay:.44s;
+}
+.echeance strong{color:var(--noir);font-weight:600}
+
+p.texte{
+  color:var(--gris);
+  font-size:clamp(.98rem,2.1vw,1.06rem);max-width:58ch;
+  margin-top:clamp(1.6rem,4vw,2.2rem);
+  animation:monte .85s cubic-bezier(.22,.61,.36,1) both;animation-delay:.54s;
+}
 @keyframes monte{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
 .contact{
-  margin-top:clamp(2rem,5vw,2.8rem);
-  padding-top:clamp(1.3rem,3.5vw,1.8rem);
+  margin-top:clamp(1.8rem,4vw,2.4rem);
+  padding-top:clamp(1.2rem,3vw,1.6rem);
   border-top:1px solid var(--ligne);
-  animation:monte .85s cubic-bezier(.22,.61,.36,1) both;
-  animation-delay:.66s;
+  animation:monte .85s cubic-bezier(.22,.61,.36,1) both;animation-delay:.64s;
 }
 .contact a{
-  color:var(--noir);
-  text-decoration:none;
-  font-weight:600;
-  font-size:clamp(1rem,2.3vw,1.12rem);
-  border-bottom:2px solid var(--or);
-  padding-bottom:2px;
+  color:var(--noir);text-decoration:none;font-weight:600;
+  font-size:clamp(.98rem,2.2vw,1.1rem);
+  border-bottom:2px solid var(--or);padding-bottom:2px;
   transition:color .25s,border-color .25s;
 }
 .contact a:hover,.contact a:focus-visible{color:var(--or-texte);border-color:var(--or-texte)}
-.contact span{display:block;color:var(--gris);font-size:.92rem;margin-top:.55rem}
+.contact span{display:block;color:var(--gris);font-size:.9rem;margin-top:.5rem}
 
-/* accessibilite : on coupe tout mouvement si la machine le demande, video comprise */
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* accessibilite : on coupe les entrees si la machine le demande.
+   Le compte a rebours, lui, continue : c'est une information, pas une decoration. */
 @media (prefers-reduced-motion:reduce){
-  .trait,p,.contact{animation:none}
+  .trait,.rebours,.echeance,p.texte,.contact{animation:none}
   .trait{transform:scaleX(1)}
-  p,.contact{opacity:1;transform:none}
+  .rebours,.echeance,p.texte,.contact{opacity:1;transform:none}
 }
 </style>
 </head>
 <body>
   <div class="page">
-    <main class="bloc">
+    <main>
       <p class="marque"><span class="clair">Clear</span>Design</p>
 
-      <h1>Le site est en construction.</h1>
+      <h1>Expérience en construction.</h1>
 
       <div class="trait" aria-hidden="true"></div>
 
-      <p>ClearDesign conçoit des sites sur mesure pour les artisans et les entreprises
-      qui veulent autre chose qu'un modèle. Chaque site est écrit pour un seul client.</p>
+      <!-- Les chiffres changent chaque seconde : on les masque aux lecteurs d'ecran,
+           qui liraient la seconde en boucle. Le texte equivalent est juste dessous. -->
+      <div class="rebours" id="rebours" aria-hidden="true">
+        <div class="case"><b id="j">--</b><span>jours</span></div>
+        <div class="case"><b id="h">--</b><span>heures</span></div>
+        <div class="case"><b id="m">--</b><span>minutes</span></div>
+        <div class="case"><b id="s">--</b><span>secondes</span></div>
+      </div>
+      <p class="sr">Dévoilement le 10 août 2026 à minuit, heure de Paris.</p>
 
-      <p>Le nouveau site arrive. En attendant, écrivez-moi, je réponds.</p>
+      <p class="echeance">Dévoilement le <strong>10 août à minuit</strong>.</p>
+
+      <p class="texte">ClearDesign conçoit des sites sur mesure pour les artisans et les
+      entreprises qui veulent autre chose qu'un modèle. Chaque site est écrit pour un seul
+      client. En attendant, écrivez-moi, je réponds.</p>
 
       <div class="contact">
         <a href="mailto:fadel@cleardesign.fr">fadel@cleardesign.fr</a>
@@ -198,34 +201,54 @@ p + p{margin-top:1.05rem;animation-delay:.54s}
   </div>
 
 <script>
-/* Deux choses :
-   1. Si la machine demande moins d'animation, on fige : le disque et le monogramme
-      restent, le mouvement disparait.
-   2. Sinon on demande explicitement la lecture. L'attribut autoplay seul ne suffit
-      pas toujours : constate le 30/07, la video restait en pause alors que play()
-      appele a la main etait accepte. On relance donc a chaque etape ou la video
-      devient exploitable, et on abandonne proprement si le navigateur refuse. */
+/* ── Compte a rebours ───────────────────────────────────────────
+   Cible : 10 aout 2026 a 00h00, heure de Paris (UTC+2 en ete).
+   On part d'un instant UTC fixe, pas d'une date locale : le decompte est donc
+   le meme pour un visiteur a Paris, a Montreal ou a Tokyo. */
+(function(){
+  var CIBLE = Date.UTC(2026, 7, 9, 22, 0, 0);   // mois 7 = aout
+  var j=document.getElementById('j'), h=document.getElementById('h'),
+      m=document.getElementById('m'), s=document.getElementById('s'),
+      boite=document.getElementById('rebours');
+  if(!j) return;
+  function deux(n){ return n<10 ? '0'+n : ''+n; }
+  function battre(){
+    var reste = CIBLE - Date.now();
+    if (reste <= 0) {
+      boite.innerHTML = '<div class="case" style="min-width:0">' +
+        '<b style="font-size:clamp(1.6rem,4.6vw,2.6rem)">C’est aujourd’hui.</b></div>';
+      return true;
+    }
+    var sec = Math.floor(reste/1000);
+    j.textContent = Math.floor(sec/86400);
+    h.textContent = deux(Math.floor(sec/3600) % 24);
+    m.textContent = deux(Math.floor(sec/60) % 60);
+    s.textContent = deux(sec % 60);
+    return false;
+  }
+  if (!battre()) {
+    var t = setInterval(function(){ if (battre()) clearInterval(t); }, 1000);
+  }
+})();
+
+/* ── Rotation du monogramme ─────────────────────────────────────
+   L'attribut autoplay seul ne suffit pas toujours : constate le 30/07, la video
+   restait en pause alors que play() appele a la main etait accepte. On demande
+   donc la lecture explicitement, on relance quand elle devient exploitable et au
+   retour sur l'onglet, et on abandonne proprement si le navigateur refuse. */
 (function(){
   var v = document.querySelector('.marque-3d video');
   if (!v) return;
-
-  var moinsDeMouvement = window.matchMedia &&
-        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (moinsDeMouvement) {
-    v.removeAttribute('autoplay');
-    v.loop = false;
-    v.pause();
-    return;
+  if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    v.removeAttribute('autoplay'); v.loop = false; v.pause(); return;
   }
-
   function lancer(){
     var p = v.play();
-    if (p && p.catch) p.catch(function(){ /* refus du navigateur : le disque reste */ });
+    if (p && p.catch) p.catch(function(){ /* refus : le disque noir reste */ });
   }
   lancer();
   v.addEventListener('loadeddata', lancer);
   v.addEventListener('canplay', lancer);
-  /* revenir sur l'onglet relance la rotation */
   document.addEventListener('visibilitychange', function(){
     if (!document.hidden && v.paused) lancer();
   });
