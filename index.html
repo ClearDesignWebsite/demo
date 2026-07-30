@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ClearDesign — le site est en construction</title>
+<meta name="description" content="ClearDesign conçoit des sites sur mesure pour les artisans et les entreprises. Le nouveau site arrive.">
+<!-- Page d'attente : elle ne doit pas etre indexee comme la page d'accueil de l'agence. -->
+<meta name="robots" content="noindex,follow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&display=swap" rel="stylesheet">
+<style>
+/* ─────────────────────────────────────────────────────────────
+   ClearDesign — page d'attente, 30/07/2026.
+   Charte respectee a la lettre (05_DESIGN/DESIGN_SYSTEM/COLORS) :
+   1 dominante (noir profond) + 1 accent (l'or, rare, jamais en aplat) + 3 neutres.
+   Typographie : 1 police, titres a -0.02em / 1.1, corps a 1.6 sur 60-75 caracteres.
+   Composition alignee a gauche : la charte interdit le texte centre sur toute une page.
+
+   Trois mouvements, trois intentions nommees, aucun de plus :
+     1. le trait d'or se TRACE      -> le chantier est en cours, on montre au lieu de dire
+     2. le curseur CLIGNOTE          -> quelque chose s'ecrit encore
+     3. le texte secondaire MONTE    -> entree, une seule fois
+   Uniquement transform et opacity (loi transverse n°5). Le titre, element LCP,
+   n'a AUCUNE animation d'opacite (LOI-016 : payee sur la demo Hodel).
+   ───────────────────────────────────────────────────────────── */
+:root{
+  --noir:#0A0A0A;
+  --or1:#D4A03C;
+  --or2:#F5D680;
+  --blanc:#FFFFFF;
+  --gris:#8A8A8A;
+  --ligne:#242424;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--noir);
+  color:var(--blanc);
+  font-family:'Archivo',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  padding:clamp(1.6rem,6vw,6rem);
+  overflow-x:hidden;
+}
+.bloc{width:100%;max-width:46rem}
+
+/* ── marque ──
+   color et animation poses EXPLICITEMENT : .marque est un <p>, donc la regle
+   generique p{color:var(--gris)} plus bas la teignait en gris. Corrige le 30/07
+   apres controle du rendu (le mot « Design » sortait en #8A8A8A au lieu du blanc).
+   Elle reste immobile : c'est l'identite, elle est la des la premiere image. */
+.marque{
+  color:var(--blanc);
+  animation:none;
+  max-width:none;
+  font-size:.94rem;
+  font-weight:700;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  margin-bottom:clamp(2.4rem,7vw,4rem);
+}
+.marque .clair{
+  background:linear-gradient(100deg,var(--or1),var(--or2));
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  color:var(--or2);
+}
+
+/* ── titre : element LCP, peint immediatement, jamais d'opacite animee ── */
+h1{
+  font-size:clamp(2.1rem,7.2vw,4.4rem);
+  font-weight:800;
+  line-height:1.1;
+  letter-spacing:-.02em;
+  max-width:14ch;
+}
+h1 .curseur{
+  display:inline-block;
+  width:.07em;
+  height:.82em;
+  margin-left:.12em;
+  vertical-align:-.04em;
+  background:linear-gradient(180deg,var(--or2),var(--or1));
+  animation:clignote 1.15s steps(1,end) infinite;
+}
+@keyframes clignote{0%,45%{opacity:1}46%,100%{opacity:0}}
+
+/* ── le trait qui se trace : le geste du chantier ── */
+.trait{
+  height:2px;
+  width:min(15rem,60%);
+  margin:clamp(1.7rem,4vw,2.4rem) 0 clamp(1.7rem,4vw,2.4rem);
+  background:linear-gradient(90deg,var(--or1),var(--or2));
+  transform-origin:left center;
+  animation:trace 1.15s cubic-bezier(.22,.61,.36,1) both;
+}
+@keyframes trace{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+
+/* ── texte : 1.6 d'interligne, 60-75 caracteres ── */
+p{
+  color:var(--gris);
+  font-size:clamp(1rem,2.3vw,1.12rem);
+  max-width:62ch;
+  animation:monte .85s cubic-bezier(.22,.61,.36,1) both;
+  animation-delay:.5s;
+}
+p + p{margin-top:1.1rem;animation-delay:.62s}
+@keyframes monte{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── contact ── */
+.contact{
+  margin-top:clamp(2.2rem,6vw,3.2rem);
+  padding-top:clamp(1.4rem,4vw,2rem);
+  border-top:1px solid var(--ligne);
+  animation:monte .85s cubic-bezier(.22,.61,.36,1) both;
+  animation-delay:.74s;
+}
+.contact a{
+  color:var(--blanc);
+  text-decoration:none;
+  font-weight:600;
+  font-size:clamp(1rem,2.4vw,1.15rem);
+  border-bottom:1px solid var(--or1);
+  padding-bottom:2px;
+  transition:color .25s;
+}
+.contact a:hover,.contact a:focus-visible{color:var(--or2)}
+.contact span{display:block;color:var(--gris);font-size:.92rem;margin-top:.55rem}
+
+/* ── accessibilite : on coupe tout mouvement si la machine le demande ── */
+@media (prefers-reduced-motion:reduce){
+  .trait,p,.contact,h1 .curseur{animation:none}
+  .trait{transform:scaleX(1)}
+  p,.contact{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+  <main class="bloc">
+    <p class="marque"><span class="clair">Clear</span>Design</p>
+
+    <h1>Le site est en construction.<span class="curseur" aria-hidden="true"></span></h1>
+
+    <div class="trait" aria-hidden="true"></div>
+
+    <p>ClearDesign conçoit des sites sur mesure pour les artisans et les entreprises
+    qui veulent autre chose qu'un modèle. Chaque site est écrit pour un seul client.</p>
+
+    <p>Le nouveau site arrive. En attendant, écrivez-moi, je réponds.</p>
+
+    <div class="contact">
+      <a href="mailto:fadel@cleardesign.fr">fadel@cleardesign.fr</a>
+      <span>Fadel Touati, fondateur</span>
+    </div>
+  </main>
+</body>
+</html>
