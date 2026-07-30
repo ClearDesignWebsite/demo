@@ -12,152 +12,224 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..125,400..800&display=swap" rel="stylesheet">
 <style>
 /* ─────────────────────────────────────────────────────────────
-   ClearDesign — page d'attente, 30/07/2026.
-   Charte respectee a la lettre (05_DESIGN/DESIGN_SYSTEM/COLORS) :
-   1 dominante (noir profond) + 1 accent (l'or, rare, jamais en aplat) + 3 neutres.
-   Typographie : 1 police, titres a -0.02em / 1.1, corps a 1.6 sur 60-75 caracteres.
+   ClearDesign — page d'attente. 30/07/2026, apres la decision de Fadel :
+   BLANC primaire · DORE secondaire · NOIR tertiaire.
+
+   La hierarchie se lit dans la composition, pas seulement dans les valeurs :
+   la page est blanche (primaire), l'or n'apparait que sur la marque et le
+   monogramme (secondaire), le noir ne sert qu'a une seule surface, le disque
+   qui porte le monogramme (tertiaire).
+
+   Contrastes MESURES sur fond blanc, pas supposes (charte : 4,5:1 minimum) :
+     noir #0A0A0A ........ 19,80:1   titre
+     gris #6B6B6B ......... 5,33:1   corps
+     or profond #94702A ... 4,56:1   le seul or lisible en texte
+     or de marque #D4A03C . 2,36:1   INSUFFISANT en texte -> decoratif uniquement
+
    Composition alignee a gauche : la charte interdit le texte centre sur toute une page.
 
-   Trois mouvements, trois intentions nommees, aucun de plus :
-     1. le trait d'or se TRACE      -> le chantier est en cours, on montre au lieu de dire
-     2. le curseur CLIGNOTE          -> quelque chose s'ecrit encore
-     3. le texte secondaire MONTE    -> entree, une seule fois
-   Uniquement transform et opacity (loi transverse n°5). Le titre, element LCP,
-   n'a AUCUNE animation d'opacite (LOI-016 : payee sur la demo Hodel).
+   Mouvements, chacun avec son intention, aucun de plus :
+     1. le monogramme TOURNE      -> la marque est vivante, presente (rendu 3D maison)
+     2. le trait d'or se TRACE    -> le chantier est en cours, on montre au lieu de dire
+     3. le texte MONTE            -> entree, une seule fois
+   Pas de curseur clignotant en plus : il dirait la meme chose que le trait, et
+   deux mecanismes pour une meme sensation, le second dilue (LOI-009).
+   Le titre, element LCP, n'a aucune animation d'opacite (LOI-016).
    ───────────────────────────────────────────────────────────── */
 :root{
-  --noir:#0A0A0A;
-  --or1:#D4A03C;
-  --or2:#F5D680;
-  --blanc:#FFFFFF;
-  --gris:#8A8A8A;
-  --ligne:#242424;
+  --blanc:#FFFFFF;        /* primaire */
+  --or:#D4A03C;           /* secondaire */
+  --or-clair:#F5D680;
+  --or-texte:#94702A;     /* le seul or lisible sur blanc */
+  --noir:#0A0A0A;         /* tertiaire */
+  --gris:#6B6B6B;
+  --ligne:#E6E6E6;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
 body{
-  background:var(--noir);
-  color:var(--blanc);
+  background:var(--blanc);
+  color:var(--noir);
   font-family:'Archivo',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;
   line-height:1.6;
   -webkit-font-smoothing:antialiased;
   min-height:100vh;
   display:flex;
   align-items:center;
-  padding:clamp(1.6rem,6vw,6rem);
+  padding:clamp(1.6rem,5vw,5rem);
   overflow-x:hidden;
 }
-.bloc{width:100%;max-width:46rem}
+.page{
+  width:100%;
+  max-width:72rem;
+  margin:0 auto;
+  display:grid;
+  gap:clamp(2.4rem,6vw,5rem);
+  grid-template-columns:1fr;
+  align-items:center;
+}
+@media(min-width:900px){
+  .page{grid-template-columns:1.25fr .75fr}
+}
 
-/* ── marque ──
-   color et animation poses EXPLICITEMENT : .marque est un <p>, donc la regle
-   generique p{color:var(--gris)} plus bas la teignait en gris. Corrige le 30/07
-   apres controle du rendu (le mot « Design » sortait en #8A8A8A au lieu du blanc).
-   Elle reste immobile : c'est l'identite, elle est la des la premiere image. */
+/* ── le monogramme : seule surface noire de la page (tertiaire) ── */
+.marque-3d{
+  position:relative;
+  width:min(19rem,64vw);
+  aspect-ratio:1;
+  border-radius:50%;
+  overflow:hidden;
+  background:var(--noir);
+  justify-self:start;
+  order:-1;
+}
+@media(min-width:900px){.marque-3d{order:0;justify-self:center;width:min(21rem,26vw)}}
+.marque-3d video{
+  width:100%;height:100%;
+  object-fit:cover;
+  display:block;
+  transform:scale(1.02);   /* mange le liseré du rendu, sans recadrer le sujet */
+}
+/* repli si la video ne demarre pas (economie de donnees, navigateur ancien) :
+   le disque noir reste, avec le monogramme en toutes lettres. */
+.marque-3d .repli{
+  position:absolute;inset:0;
+  display:grid;place-items:center;
+  color:var(--or);
+  font-size:3.2rem;font-weight:800;letter-spacing:.02em;
+  z-index:-1;
+}
+
+/* ── texte ── */
 .marque{
-  color:var(--blanc);
+  color:var(--noir);
   animation:none;
   max-width:none;
   font-size:.94rem;
   font-weight:700;
   letter-spacing:.14em;
   text-transform:uppercase;
-  margin-bottom:clamp(2.4rem,7vw,4rem);
+  margin-bottom:clamp(1.8rem,5vw,2.6rem);
 }
-.marque .clair{
-  background:linear-gradient(100deg,var(--or1),var(--or2));
-  -webkit-background-clip:text;
-  background-clip:text;
-  -webkit-text-fill-color:transparent;
-  color:var(--or2);
-}
+.marque .clair{color:var(--or-texte)}
 
-/* ── titre : element LCP, peint immediatement, jamais d'opacite animee ── */
+/* titre : element LCP, peint immediatement, jamais d'opacite animee */
 h1{
-  font-size:clamp(2.1rem,7.2vw,4.4rem);
+  font-size:clamp(2rem,6vw,3.9rem);
   font-weight:800;
   line-height:1.1;
   letter-spacing:-.02em;
-  max-width:14ch;
+  max-width:15ch;
 }
-h1 .curseur{
-  display:inline-block;
-  width:.07em;
-  height:.82em;
-  margin-left:.12em;
-  vertical-align:-.04em;
-  background:linear-gradient(180deg,var(--or2),var(--or1));
-  animation:clignote 1.15s steps(1,end) infinite;
-}
-@keyframes clignote{0%,45%{opacity:1}46%,100%{opacity:0}}
 
-/* ── le trait qui se trace : le geste du chantier ── */
+/* le trait qui se trace : le geste du chantier */
 .trait{
   height:2px;
-  width:min(15rem,60%);
-  margin:clamp(1.7rem,4vw,2.4rem) 0 clamp(1.7rem,4vw,2.4rem);
-  background:linear-gradient(90deg,var(--or1),var(--or2));
+  width:min(13rem,55%);
+  margin:clamp(1.5rem,3.5vw,2.2rem) 0;
+  background:linear-gradient(90deg,var(--or),var(--or-clair));
   transform-origin:left center;
   animation:trace 1.15s cubic-bezier(.22,.61,.36,1) both;
 }
 @keyframes trace{from{transform:scaleX(0)}to{transform:scaleX(1)}}
 
-/* ── texte : 1.6 d'interligne, 60-75 caracteres ── */
 p{
   color:var(--gris);
-  font-size:clamp(1rem,2.3vw,1.12rem);
-  max-width:62ch;
+  font-size:clamp(1rem,2.2vw,1.1rem);
+  max-width:60ch;
   animation:monte .85s cubic-bezier(.22,.61,.36,1) both;
-  animation-delay:.5s;
+  animation-delay:.42s;
 }
-p + p{margin-top:1.1rem;animation-delay:.62s}
+p + p{margin-top:1.05rem;animation-delay:.54s}
 @keyframes monte{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 
-/* ── contact ── */
 .contact{
-  margin-top:clamp(2.2rem,6vw,3.2rem);
-  padding-top:clamp(1.4rem,4vw,2rem);
+  margin-top:clamp(2rem,5vw,2.8rem);
+  padding-top:clamp(1.3rem,3.5vw,1.8rem);
   border-top:1px solid var(--ligne);
   animation:monte .85s cubic-bezier(.22,.61,.36,1) both;
-  animation-delay:.74s;
+  animation-delay:.66s;
 }
 .contact a{
-  color:var(--blanc);
+  color:var(--noir);
   text-decoration:none;
   font-weight:600;
-  font-size:clamp(1rem,2.4vw,1.15rem);
-  border-bottom:1px solid var(--or1);
+  font-size:clamp(1rem,2.3vw,1.12rem);
+  border-bottom:2px solid var(--or);
   padding-bottom:2px;
-  transition:color .25s;
+  transition:color .25s,border-color .25s;
 }
-.contact a:hover,.contact a:focus-visible{color:var(--or2)}
+.contact a:hover,.contact a:focus-visible{color:var(--or-texte);border-color:var(--or-texte)}
 .contact span{display:block;color:var(--gris);font-size:.92rem;margin-top:.55rem}
 
-/* ── accessibilite : on coupe tout mouvement si la machine le demande ── */
+/* accessibilite : on coupe tout mouvement si la machine le demande, video comprise */
 @media (prefers-reduced-motion:reduce){
-  .trait,p,.contact,h1 .curseur{animation:none}
+  .trait,p,.contact{animation:none}
   .trait{transform:scaleX(1)}
   p,.contact{opacity:1;transform:none}
 }
 </style>
 </head>
 <body>
-  <main class="bloc">
-    <p class="marque"><span class="clair">Clear</span>Design</p>
+  <div class="page">
+    <main class="bloc">
+      <p class="marque"><span class="clair">Clear</span>Design</p>
 
-    <h1>Le site est en construction.<span class="curseur" aria-hidden="true"></span></h1>
+      <h1>Le site est en construction.</h1>
 
-    <div class="trait" aria-hidden="true"></div>
+      <div class="trait" aria-hidden="true"></div>
 
-    <p>ClearDesign conçoit des sites sur mesure pour les artisans et les entreprises
-    qui veulent autre chose qu'un modèle. Chaque site est écrit pour un seul client.</p>
+      <p>ClearDesign conçoit des sites sur mesure pour les artisans et les entreprises
+      qui veulent autre chose qu'un modèle. Chaque site est écrit pour un seul client.</p>
 
-    <p>Le nouveau site arrive. En attendant, écrivez-moi, je réponds.</p>
+      <p>Le nouveau site arrive. En attendant, écrivez-moi, je réponds.</p>
 
-    <div class="contact">
-      <a href="mailto:fadel@cleardesign.fr">fadel@cleardesign.fr</a>
-      <span>Fadel Touati, fondateur</span>
+      <div class="contact">
+        <a href="mailto:fadel@cleardesign.fr">fadel@cleardesign.fr</a>
+        <span>Fadel Touati, fondateur</span>
+      </div>
+    </main>
+
+    <div class="marque-3d">
+      <span class="repli" aria-hidden="true">CD</span>
+      <video src="media/cd.mp4" autoplay muted loop playsinline
+             preload="auto" aria-label="Monogramme ClearDesign en rotation"></video>
     </div>
-  </main>
+  </div>
+
+<script>
+/* Deux choses :
+   1. Si la machine demande moins d'animation, on fige : le disque et le monogramme
+      restent, le mouvement disparait.
+   2. Sinon on demande explicitement la lecture. L'attribut autoplay seul ne suffit
+      pas toujours : constate le 30/07, la video restait en pause alors que play()
+      appele a la main etait accepte. On relance donc a chaque etape ou la video
+      devient exploitable, et on abandonne proprement si le navigateur refuse. */
+(function(){
+  var v = document.querySelector('.marque-3d video');
+  if (!v) return;
+
+  var moinsDeMouvement = window.matchMedia &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (moinsDeMouvement) {
+    v.removeAttribute('autoplay');
+    v.loop = false;
+    v.pause();
+    return;
+  }
+
+  function lancer(){
+    var p = v.play();
+    if (p && p.catch) p.catch(function(){ /* refus du navigateur : le disque reste */ });
+  }
+  lancer();
+  v.addEventListener('loadeddata', lancer);
+  v.addEventListener('canplay', lancer);
+  /* revenir sur l'onglet relance la rotation */
+  document.addEventListener('visibilitychange', function(){
+    if (!document.hidden && v.paused) lancer();
+  });
+})();
+</script>
 </body>
 </html>
