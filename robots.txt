@@ -1,5 +1,11 @@
-# Maquettes de prospection ClearDesign.
-# Aucune de ces pages ne doit apparaitre dans un moteur de recherche :
-# ce sont des propositions commerciales adressees a une personne, pas des sites publies.
+# cleardesign.fr — maquettes de prospection ClearDesign.
+#
+# On AUTORISE l'exploration, volontairement. Chaque page de maquette porte deja
+# une balise noindex : pour qu'un moteur la respecte, il faut qu'il puisse lire
+# la page. Un « Disallow: / » l'en empecherait, et Google peut alors indexer
+# l'adresse sans son contenu, ce qui est pire que de ne rien interdire.
+#
+# La protection reelle est donc le noindex sur chaque page, verifie a chaque
+# publication par publier-demo.sh (il refuse de publier une page qui n'en a pas).
 User-agent: *
-Disallow: /
+Allow: /
